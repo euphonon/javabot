@@ -16,11 +16,13 @@ public class mainClass {
                         Server server = message.getServer().get();
                         if (message.getMessageContent().equals(".NAME;"))
                             message.getChannel().sendMessage("```" + server.getName() + "```");
-                        else if (message.getMessageContent().equals(".MEMBERS.LENGTH;"))
+                        if (message.getMessageContent().equals(".MEMBERS.LENGTH;"))
                             message.getChannel().sendMessage("```" + server.getMemberCount() + "```");
-                        else if (message.getMessageContent().equals(".CHANNELS.LENGTH;"))
+                        if (message.getMessageContent().equals(".CHANNELS.LENGTH;"))
                             message.getChannel().sendMessage("```" + server.getChannels().size() + "```");
-                        else if (message.getMessageContent().startsWith(".MEMBERS[")) {
+
+                        // Indexed Code
+                        if (message.getMessageContent().startsWith(".MEMBERS[")) {
                             User[] members = server.getMembers().toArray(new User[0]);
                             User user = members[Integer.valueOf(StringUtils.substringBetween(message.getMessageContent(), "[", "]"))];
                             switch (message.getMessageContent().split("]")[1]) {
@@ -32,6 +34,8 @@ public class mainClass {
                                     message.getChannel().sendMessage("```" + user.getIdAsString() + "```");
                                 case ".MENTION":
                                     message.getChannel().sendMessage(user.getMentionTag());
+                                default:
+                                    message.getChannel().sendMessage("```DISCRIMINATED_NAME:" + user.getDiscriminatedName() + "\nNICKNAME:" + user.getNickname(server).get() + "\nUSER_ID:" + user.getIdAsString() + "```");
                             }
                         } else if (message.getMessageContent().startsWith(".OWNER")) {
                             switch (message.getMessageContent().split(".")[2]) {
@@ -43,6 +47,10 @@ public class mainClass {
                                     message.getChannel().sendMessage("```" + server.getOwner().get().getIdAsString() + "```");
                                 case ".MENTION":
                                     message.getChannel().sendMessage(server.getOwner().get().getMentionTag());
+                                default:
+                                    User user = message.getServer().get().getOwner().get();
+                                    message.getChannel().sendMessage("```DISCRIMINATED_NAME:" + user.getDiscriminatedName() + "\nNICKNAME:" + user.getNickname(server).get() + "\nUSER_ID:" + user.getIdAsString() + "```");
+
                             }
                         } else if (message.getMessageContent().startsWith(".CHANNELS[")) {
                             ServerTextChannel[] channels = server.getTextChannels().toArray(new ServerTextChannel[0]);
@@ -55,7 +63,10 @@ public class mainClass {
                                 case ".IS_NSFW;":
                                     message.getChannel().sendMessage("```" + channel.isNsfw() + "```");
                                 case ".IS_HIDDEN;":
-                                    message.getChannel().sendMessage("```" + channel.canSee(message.getMessageAuthor().asUser().get()) + "```");
+                                    message.getChannel().sendMessage("```" + !channel.canSee(message.getMessageAuthor().asUser().get()) + "```");
+                                default:
+                                    message.getChannel().sendMessage("```NAME:" + channel.getName() + "\nTOPIC:" + channel.getTopic() + "\nIS_NSFW:" + channel.isNsfw() + "\nIS_HIDDEN:" + !channel.canSee(message.getMessageAuthor().asUser().get()) + "```");
+
                             }
                         }
                     }
