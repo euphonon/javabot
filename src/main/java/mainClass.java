@@ -11,6 +11,7 @@ public class mainClass {
         DiscordApi API = new DiscordApiBuilder().setToken(System.getenv("TOKEN")).login().join();
 
         API.addMessageCreateListener(message ->{
+            API.updateActivity("Watching " + API.getCachedUsers().size() + " users. || .HELP;");
                 if(message.getMessageAuthor().isUser()){
                     if(message.getServer().isPresent()) {
                         Server server = message.getServer().get();
@@ -26,26 +27,26 @@ public class mainClass {
                             User[] members = server.getMembers().toArray(new User[0]);
                             User user = members[Integer.valueOf(StringUtils.substringBetween(message.getMessageContent(), "[", "]"))];
                             switch (message.getMessageContent().split("]")[1]) {
-                                case ".DISCRIMINATED_NAME":
+                                case ".DISCRIMINATED_NAME;":
                                     message.getChannel().sendMessage("```" + user.getDiscriminatedName() + "```");
-                                case ".NICKNAME":
+                                case ".NICKNAME;":
                                     message.getChannel().sendMessage("```" + user.getNickname(server).get() + "```");
-                                case ".GETID":
+                                case ".GETID;":
                                     message.getChannel().sendMessage("```" + user.getIdAsString() + "```");
-                                case ".MENTION":
+                                case ".MENTION;":
                                     message.getChannel().sendMessage(user.getMentionTag());
                                 default:
                                     message.getChannel().sendMessage("```DISCRIMINATED_NAME:" + user.getDiscriminatedName() + "\nNICKNAME:" + user.getNickname(server).get() + "\nUSER_ID:" + user.getIdAsString() + "```");
                             }
                         } else if (message.getMessageContent().startsWith(".OWNER")) {
                             switch (message.getMessageContent().split(".")[2]) {
-                                case ".DISCRIMINATED_NAME":
+                                case ".DISCRIMINATED_NAME;":
                                     message.getChannel().sendMessage("```" + server.getOwner().get().getDiscriminatedName() + "```");
-                                case ".NICKNAME":
+                                case ".NICKNAME;":
                                     message.getChannel().sendMessage("```" + server.getOwner().get().getNickname(server) + "```");
-                                case ".GETID":
+                                case ".GETID;":
                                     message.getChannel().sendMessage("```" + server.getOwner().get().getIdAsString() + "```");
-                                case ".MENTION":
+                                case ".MENTION;":
                                     message.getChannel().sendMessage(server.getOwner().get().getMentionTag());
                                 default:
                                     User user = message.getServer().get().getOwner().get();
