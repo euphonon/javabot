@@ -10,17 +10,22 @@ public class mainClass {
         API.addMessageCreateListener(message ->{
             if(message.getServer().isPresent()) {
                 Server server = message.getServer().get();
-                if(message.getMessageContent().equals(".getName"));
+                if(message.getMessageContent().equals(".NAME")) message.getChannel().sendMessage("```" + server.getName() + "```");
+
                 // Commands:
                 // .NAME
                 // .MEMBERS...
                     // .LENGTH
                     // [i]
+                        // .DISCRIMINATED_NAME
+                        // .NICKNAME
+                        // .GETID
+                        // .MENTION
+                // .OWNER
                     // .DISCRIMINATED_NAME
                     // .NICKNAME
                     // .GETID
                     // .MENTION
-                // .OWNER
                 // .CHANNELS...
                     // .LENGTH
                     // [i]
