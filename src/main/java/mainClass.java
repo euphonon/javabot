@@ -10,27 +10,24 @@ public class mainClass {
         API.addMessageCreateListener(message ->{
             if(message.getServer().isPresent()) {
                 Server server = message.getServer().get();
+                if(message.getMessageContent().equals(".getName"));
                 // Commands:
-                // .getName();
-                // .getMembers()...
-                    // .length;
+                // .NAME
+                // .MEMBERS...
+                    // .LENGTH
                     // [i]
-                    // .getDiscriminatedName();
-                    // .getNickname();
-                    // .getId();
-                    // .mention();
-                // .getOwner();
-                // .getChannels()...
-                    // .length;
+                    // .DISCRIMINATED_NAME
+                    // .NICKNAME
+                    // .GETID
+                    // .MENTION
+                // .OWNER
+                // .CHANNELS...
+                    // .LENGTH
                     // [i]
-                    // .getName();
-                    // .getTopic();
-                    // .isNSFW();
-                    // .isHiddenToYou();
-                // .banUser(String userID, Integer messagesToDelete, String reason);
-                // .kickUser(String userID, String reason);
-                // .disconnect();
-                // .massDM(String content);
+                        // .NAME
+                        // .TOPIC
+                        // .IS_NSFW
+                        // .IS_HIDDEN
             }
         });
     }
